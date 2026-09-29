@@ -128,7 +128,8 @@ How the run unfolds:
 
 Completion length stays at ~215 tokens throughout, so the gain is not verbosity or test-time scaling. **I hypothesise,
 as the samples below show, that the major gain is in having principally better and more accurate logical statements
-in the reasoning section.**
+in the reasoning section, or ones that serve the final correctness of the conclusion better, since learned illogical
+patterns can still produce consistently correct results on some problem classes.**
 
 Nb: I observed little to no change in backtracking and self-correction in the zero model's completions, no "Wait..."
 followed by a re-evaluation of the previous steps.
