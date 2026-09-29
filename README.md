@@ -67,18 +67,23 @@ final model is on the Hugging Face Hub (see `models/README.md`).
 
 ![SFT training curves](plot/sft_training_curves.png)
 
-Validation loss keeps falling to step 125 while validation accuracy peaks at step 25 and plateaus. Loss measures how
-well the student predicts the teacher's tokens; accuracy measures whether its own answers are right. This is
-interesting, **because it means that throughout training the model kept getting better at predicting tokens the way
-GLM 5.3 does, mapping its own distribution closer and closer to the teacher's, while its validation performance,
-after an initial improvement, saturated and did not improve any further.** It suggests a limit of distillation here:
-the model learned to "think" more like GLM, but not to perform better on the task. More generally it points to a limit
-of distillation as a technique for eliciting generalised capabilities in a student: a model trained from zero, or a
-frontier model, has had to generalise on its own, potentially from first principles, whereas a distilled student
-learns to imitate the surface of that generalisation. This is consistent with frontier weights such as Mythos
-generalising much better than the smaller models distilled from them, such as Opus or Sonnet, even when a spiky or
-task-specific benchmark shows comparable performance in isolation. The two signals disagree, so checkpoints are
-selected on accuracy.
+Validation loss keeps falling to step 125 while validation accuracy peaks at step 25 and plateaus. The two curves
+measure different things:
+
+- **Loss** measures how well the student predicts the teacher's tokens. It kept improving throughout training: the
+  model mapped its own distribution closer and closer to GLM 5.3's.
+- **Accuracy** measures whether the student's own answers are right. It improved once, then saturated.
+
+**The model learned to "think" more like GLM, but not to perform better on the task.** This is a limit of distillation
+as a technique for eliciting generalised capabilities in a student:
+
+- a model trained from zero, or a frontier model, has had to generalise on its own, potentially from first principles;
+- a distilled student learns to imitate the surface of that generalisation;
+- this is consistent with frontier weights such as Mythos generalising much better than the smaller models distilled
+  from them, such as Opus or Sonnet, even when a spiky or task-specific benchmark shows comparable performance in
+  isolation.
+
+Because the two signals disagree, checkpoints are selected on accuracy.
 
 ## GRPO
 
