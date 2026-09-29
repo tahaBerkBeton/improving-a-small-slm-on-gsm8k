@@ -89,11 +89,25 @@ Because the two signals disagree, I select checkpoints on accuracy.
 
 ![GRPO training curves](plot/grpo_training_curves.png)
 
-Training reward rises from 3.10 to 3.43 (max 4.0) over 200 steps, and the sampled validation reward follows it. Greedy validation accuracy climbs from the SFT model's 69.90% to a best of **71.87% at step 100**, then plateaus between 71% and 72% for the rest of the run; the trainer keeps the step-100 checkpoint. The +2.0 points are a net effect: GRPO fixes 122 validation questions the SFT model got wrong and breaks 96 it had right, and it also lowers unparseable answers from 57 to 44. Unlike the zero run shown below, this model starts RL with a much higher reward (3.10 at step 1 against 2.33 for
-zero), which confirms that SFT bootstrapped it to a higher accuracy on the task; it then failed to progress
-significantly with RL. **This improvement, although meaningful, remains limited, and its modesty disputes my initial
-hypothesis: bootstrapping RL with SFT data to elicit better reasoning is not as straightforward as one would think,
-especially in light of the results below.**
+Training reward rises from 3.10 to 3.43 (max 4.0) over 200 steps, and the sampled validation reward follows it.
+Greedy validation accuracy climbs from the SFT model's 69.90% to a best of **71.87% at step 100**, then plateaus
+between 71% and 72% for the rest of the run; the trainer keeps the step-100 checkpoint.
+
+The +2.0 points are a net effect:
+
+- GRPO fixes 122 validation questions the SFT model got wrong;
+- it breaks 96 that the SFT model had right;
+- it lowers unparseable answers from 57 to 44.
+
+Compared with the zero run shown below:
+
+- this model starts RL with a much higher reward, 3.10 at step 1 against 2.33 for zero, which confirms that SFT
+  bootstrapped it to a higher accuracy on the task;
+- it then fails to progress significantly with RL.
+
+**This improvement, although meaningful, remains limited, and its modesty disputes my initial hypothesis: bootstrapping
+RL with SFT data to elicit better reasoning is not as straightforward as one would think, especially in light of the
+results below.**
 
 ## GRPO alone, from the untouched model (zero)
 
