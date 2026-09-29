@@ -386,18 +386,30 @@ Jenna starts with 8 sapphires. Each sapphire is worth $800, so the total value o
 </answer>
 ```
 
-**Question.** Rory makes a cake that weighs 20 ounces. She cuts into 8 pieces. Rory and her mom each have a piece. How much does the remaining cake weigh?
+**Question.** Three friends: Mike, Jim, and Tony decided to play a game. After 3 rounds Mike has 21 points, Jim 3 points less than Mike, and Tony 2 times more than Mike. In the fourth round, every player gets an extra point if they have over 20 points. How many points do all three players have in total after the extra points had been distributed?
 
-**Gold answer.** 15
+**Gold answer.** 83
 
-**Baseline (Qwen2.5-1.5B-Instruct)** — wrong (parsed 5)
+**Baseline (Qwen2.5-1.5B-Instruct)** — wrong (parsed 82)
 
 ```
 <reasoning>
-The cake weighs 20 ounces and is cut into 8 pieces. Each piece weighs 20/8 ounces. Rory and her mom each have a piece, so there are 2 pieces in total. The remaining cake is the total weight minus the weight of the pieces they have. We need to calculate the weight of the remaining cake.
+Let's start by calculating the points each player has after the first three rounds.
+
+Mike has 21 points.
+Jim has 21 - 3 = 18 points.
+Tony has 2 * 21 = 42 points.
+
+In the fourth round, every player gets an extra point if they have over 20 points. Since Mike has 21 points, he gets an extra point. So, Mike now has 21 + 1 = 22 points.
+
+Now, let's calculate the total points after the extra points were distributed.
+
+Total points = Mike's points + Jim's points + Tony's points
+Total points = 22 + 18 + 42
+Total points = 82
 </reasoning>
 <answer>
-5
+82
 </answer>
 ```
 
@@ -405,16 +417,28 @@ The cake weighs 20 ounces and is cut into 8 pieces. Each piece weighs 20/8 ounce
 
 ```
 <reasoning>
-First, we need to determine the weight of each piece of cake. Since Rory cuts the cake into 8 pieces and the total weight of the cake is 20 ounces, each piece weighs \( \frac{20}{8} = 2.5 \) ounces. 
+First, let's determine the points each player has after the first three rounds.
 
-Rory and her mom each have a piece, so together they have 2 pieces. The weight of these 2 pieces is \( 2 \times 2.5 = 5 \) ounces. 
+Mike has 21 points.
+Jim has 3 points less than Mike, so Jim has \( 21 - 3 = 18 \) points.
+Tony has 2 times more points than Mike, so Tony has \( 2 \times 21 = 42 \) points.
 
-To find the weight of the remaining cake, we subtract the weight of the pieces that Rory and her mom have from the total weight of the cake: \( 20 - 5 = 15 \) ounces. 
+Next, we need to check if any player has over 20 points after the first three rounds. Mike has 21 points, which is over 20, so he gets an extra point in the fourth round. Therefore, Mike's points after the fourth round are \( 21 + 1 = 22 \).
 
-Therefore, the remaining cake weighs 15 ounces.
+Now, let's calculate the points for Jim and Tony after the fourth round. Since Jim has 18 points and does not have over 20 points, he does not get an extra point. Therefore, Jim's points after the fourth round are still 18.
+
+Tony has 42 points, which is over 20, so he gets an extra point in the fourth round. Therefore, Tony's points after the fourth round are \( 42 + 1 = 43 \).
+
+Finally, we sum up the points of all three players after the fourth round:
+- Mike: 22 points
+- Jim: 18 points
+- Tony: 43 points
+
+The total points after the extra points were distributed is \( 22 + 18 + 43 = 83 \).
+
 </reasoning>
 <answer>
-15
+83
 </answer>
 ```
 
