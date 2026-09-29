@@ -431,9 +431,3 @@ Therefore, the remaining cake weighs 15 ounces.
 ```
 
 ## What I would do next
-
-- Use a held-out slice of the train split for checkpoint selection, so the validation number is not also the
-  selection number.
-- Continue GRPO from the best checkpoint at a lower learning rate, with a soft penalty on overlong completions.
-- Ask the teacher to verify its result at the end of each trace, so the student learns a checking habit that RL can
-  reinforce.
