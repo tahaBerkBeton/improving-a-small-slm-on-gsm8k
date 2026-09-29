@@ -431,3 +431,21 @@ Therefore, the remaining cake weighs 15 ounces.
 ```
 
 ## What I would do next
+
+- **Give the model a symbolic verifier and go agentic.** LLMs have been shown to be whimsical with calculations
+  natively, with accuracy that shifts when only the numbers in a problem change
+  ([GSM-Symbolic, Mirzadeh et al., Apple, 2024](https://arxiv.org/abs/2410.05229)). A calculator or Python tool
+  removes that failure mode. I would first measure how much the Instruct model gains when used agentically with a
+  tool, in the spirit of [CodeAct](https://arxiv.org/abs/2402.01030), then run RL on tool-using trajectories and see
+  whether the tool call itself becomes a learned, reliable habit.
+- **Generate better traces.** I suspect the reasoning traces synthesised with GLM 5.3 were not good enough, or did
+  not elicit logical steps of high enough quality, to distil problem-solving patterns rather than style. I would
+  regenerate them with a strict format of explicit logical assertions, one checkable claim per line, and re-run the
+  SFT-then-GRPO comparison against zero.
+- **Scale beyond GSM8K.** Distil and run RL on analogous code, maths and logic tasks together, so that what the model
+  learns is a transferable behaviour rather than a GSM8K-specific one, and measure the transfer across the three.
+- **Grade the reasoning, not only the answer.** In GRPO, add a process reward model or an LLM judge that scores the
+  quality of the reasoning section and fold it into the reward next to correctness. It might preserve higher-quality
+  reasoning while pushing equally hard on the final answer.
+- **Scale test-time compute agentically.** Best-of-N rollouts with a verifier, self-criticism calls, and debate
+  between rollouts, measured against the single greedy pass used here.
