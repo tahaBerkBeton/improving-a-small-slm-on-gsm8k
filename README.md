@@ -77,7 +77,7 @@ as a limit of distillation as a technique for eliciting generalised capabilities
 
 - a model trained from zero, or a frontier model, has had to generalise on its own, potentially from first principles;
 - a distilled student learns to imitate the surface of that generalisation;
-- this is consistent with what I observe on frontier weights such as Mythos, which generalise much better than the
+- this is consistent with what some have reported on frontier weights such as Mythos, which generalise much better than the
   smaller models distilled from them, such as Opus or Sonnet, **even when a spiky or task-specific benchmark shows
   comparable performance in isolation.**
 
