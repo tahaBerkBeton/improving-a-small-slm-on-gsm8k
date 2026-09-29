@@ -107,7 +107,7 @@ Compared with the zero run shown below:
 RL with SFT data to elicit better reasoning is not as straightforward as one would think, especially in light of the
 results below.**
 
-Nb: this run was capped at 200 steps with an early-stopping patience of 4, against 1,000 steps and a patience of 8
+btw: this run was capped at 200 steps with an early-stopping patience of 4, against 1,000 steps and a patience of 8
 for the zero run below. **It is worth rerunning it with the same step budget and patience as zero, to see whether the
 SFT-bootstrapped model catches up.**
 
