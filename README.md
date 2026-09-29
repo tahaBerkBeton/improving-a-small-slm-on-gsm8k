@@ -62,6 +62,97 @@ Training reward rises from 3.10 to 3.43 (max 4.0) over 200 steps, and the sample
 
 Applying the identical GRPO recipe to the untouched Instruct model, with no SFT, gives the best model of the project: **76.80% at step 550**, +14.7 points over the baseline and 4.9 points above SFT + GRPO. Training reward rises from 2.33 to ~3.6; the first 25 steps are flat (62.24%) while the model learns the output format, then accuracy climbs steeply, passing the SFT model by step 75 and the SFT + GRPO model by step 100, and drifts upward to a plateau in the 76% band from step 300. Completion length stays at ~215 tokens throughout, so the gain is not verbosity. Early stopping ended the run at step 750 after eight checkpoints without a new best. Read against the SFT + GRPO run, this is the project's main finding: distilling on the teacher's traces made the model better fast but anchored it to the teacher's reasoning style, and RL from the free model found a better policy.
 
+### What RL changed in the model's behaviour, and two before/after examples
+
+Nothing in the reward asks for longer or more explicit reasoning; it only pays for a parseable integer and a correct
+one. Measured on the 1,319 validation completions, RL alone nevertheless changed three things about how the model
+answers:
+
+| | Baseline | Zero |
+|---|---|---|
+| Mean words inside `<reasoning>` | 103 | 153 |
+| Completions with no parseable integer in `<answer>` | 139 | 27 |
+| Questions solved that none of baseline, SFT, SFT + GRPO solve | | 52 |
+
+The baseline's most common failure is to describe the calculation without carrying it out, then guess in the answer
+tag, or to put an expression or a float there (`$20 / 3 = $6.67`). The zero model executes every step inside the
+reasoning, with intermediate results, and leaves a bare integer in the answer. Two of the 52 questions only the zero
+model gets right, hand-picked (indices are in `scripts/plots/find_readme_examples.py`), showing the baseline and the
+zero model only:
+
+**Question.** Finley took part in a 100-meter race.  She started off in first, but then fell back 5 spots.  She then moved ahead 2 spots, before falling behind 3.  Lastly, she jumped ahead 1 spot to finish the race.  What place did she finish in?
+
+**Gold answer.** 6
+
+**Baseline (Qwen2.5-1.5B-Instruct)** — wrong (parsed 4)
+
+```
+<reasoning>
+Let's track Finley's position step by step:
+1. She started in first place.
+2. She fell back 5 spots: 1 - 5 = -4
+3. She moved ahead 2 spots: -4 + 2 = -2
+4. She fell behind 3 spots: -2 - 3 = -5
+5. She jumped ahead 1 spot: -5 + 1 = -4
+
+Finley finished in the 4th place.
+</reasoning>
+<answer>
+4
+</answer>
+```
+
+**Zero (GRPO alone)** — correct
+
+```
+<reasoning>
+To determine Finley's final place in the race, we need to track her position step by step.
+
+1. Finley started in first place.
+2. She fell back 5 spots, so her new position is first - 5 = 6th place.
+3. She moved ahead 2 spots, so her new position is 6 + 2 = 8th place.
+4. She fell behind 3 spots, so her new position is 8 - 3 = 5th place.
+5. Lastly, she jumped ahead 1 spot, so her final position is 5 + 1 = 6th place.
+
+Therefore, Finley finished in 6th place.
+</reasoning>
+<answer>
+6
+</answer>
+```
+
+**Question.** Rory makes a cake that weighs 20 ounces. She cuts into 8 pieces. Rory and her mom each have a piece. How much does the remaining cake weigh?
+
+**Gold answer.** 15
+
+**Baseline (Qwen2.5-1.5B-Instruct)** — wrong (parsed 5)
+
+```
+<reasoning>
+The cake weighs 20 ounces and is cut into 8 pieces. Each piece weighs 20/8 ounces. Rory and her mom each have a piece, so there are 2 pieces in total. The remaining cake is the total weight minus the weight of the pieces they have. We need to calculate the weight of the remaining cake.
+</reasoning>
+<answer>
+5
+</answer>
+```
+
+**Zero (GRPO alone)** — correct
+
+```
+<reasoning>
+First, we need to determine the weight of each piece of cake. Since Rory cuts the cake into 8 pieces and the total weight of the cake is 20 ounces, each piece weighs \( \frac{20}{8} = 2.5 \) ounces. 
+
+Rory and her mom each have a piece, so together they have 2 pieces. The weight of these 2 pieces is \( 2 \times 2.5 = 5 \) ounces. 
+
+To find the weight of the remaining cake, we subtract the weight of the pieces that Rory and her mom have from the total weight of the cake: \( 20 - 5 = 15 \) ounces. 
+
+Therefore, the remaining cake weighs 15 ounces.
+</reasoning>
+<answer>
+15
+</answer>
+```
+
 ## Examples
 
 Chosen automatically by `scripts/plots/find_readme_examples.py` (the shortest completions among the qualifying
