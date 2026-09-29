@@ -447,3 +447,6 @@ Therefore, the remaining cake weighs 15 ounces.
   reasoning while pushing equally hard on the final answer.
 - **Scale test-time compute agentically.** Best-of-N rollouts with a verifier, self-criticism calls, and debate
   between rollouts, measured against the single greedy pass used here.
+- **Try LoRA instead of full fine-tuning.** Every run here updates all parameters. I would evaluate whether LoRA,
+  for the SFT stage and for GRPO, moves the model's distribution differently, positively or negatively, both in
+  validation accuracy and in how far the resulting model drifts from the Instruct baseline.
