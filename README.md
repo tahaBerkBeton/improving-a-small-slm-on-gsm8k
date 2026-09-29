@@ -454,3 +454,10 @@ Therefore, the remaining cake weighs 15 ounces.
 - **Try LoRA instead of full fine-tuning.** Every run here updates all parameters. I would evaluate whether LoRA,
   for the SFT stage and for GRPO, moves the model's distribution differently, positively or negatively, both in
   validation accuracy and in how far the resulting model drifts from the Instruct baseline.
+
+## Limitation
+
+A major limitation of this work is that I should have split a validation set separate from the test set, in order to
+provide more accurate evaluation results. Although we never train on the test labels, we implicitly select for them:
+checkpoints and early stopping are chosen on accuracy over the same 1,319 questions that the final numbers are
+reported on. For the sake of time and delivery this was neglected, but I am aware of it.
