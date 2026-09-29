@@ -128,6 +128,17 @@ Completion length stays at ~215 tokens throughout, so the gain is not verbosity 
 as the samples below show, that the major gain is in having principally better and more accurate logical statements
 in the reasoning section.**
 
+Nb: I observed no backtracking in the zero model's completions, no "Wait..." followed by a re-evaluation of the
+previous steps: self-correction phrases appear in 14 of its 1,319 validation completions against 13 for the baseline,
+and in both cases they are triggered by an impossible intermediate result rather than by reflection. Those behaviours
+are the hallmark of large-scale RL runs: the "aha moment" of DeepSeek-R1-Zero, where a 671B base model learns to
+allocate more thinking time and re-evaluate its approach, with completions growing to thousands of tokens over
+training ([DeepSeek-R1, sections 2.2.3 and 2.2.4](https://arxiv.org/abs/2501.12948)), or QwQ-32B, obtained by
+scaling outcome-reward RL on math and coding from a cold-start checkpoint of a 32B model
+([Qwen team, QwQ-32B: Embracing the Power of Reinforcement Learning, 2025](https://qwenlm.github.io/blog/qwq-32b/)).
+Eliciting them would most likely require much larger RL runs, on tasks and datasets of much higher complexity than
+GSM8K, with larger models and deeper training.
+
 Read against the SFT + GRPO run, this is the project's main finding: distilling on the teacher's traces made the model
 better fast but anchored it to the teacher's reasoning style, and RL from the free model found a better policy.
 
