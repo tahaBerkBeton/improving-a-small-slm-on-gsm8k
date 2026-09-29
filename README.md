@@ -72,8 +72,13 @@ well the student predicts the teacher's tokens; accuracy measures whether its ow
 interesting, **because it means that throughout training the model kept getting better at predicting tokens the way
 GLM 5.3 does, mapping its own distribution closer and closer to the teacher's, while its validation performance,
 after an initial improvement, saturated and did not improve any further.** It suggests a limit of distillation here:
-the model learned to "think" more like GLM, but not to perform better on the task. The two signals disagree, so
-checkpoints are selected on accuracy.
+the model learned to "think" more like GLM, but not to perform better on the task. More generally it points to a limit
+of distillation as a technique for eliciting generalised capabilities in a student: a model trained from zero, or a
+frontier model, has had to generalise on its own, potentially from first principles, whereas a distilled student
+learns to imitate the surface of that generalisation. This is consistent with frontier weights such as Mythos
+generalising much better than the smaller models distilled from them, such as Opus or Sonnet, even when a spiky or
+task-specific benchmark shows comparable performance in isolation. The two signals disagree, so checkpoints are
+selected on accuracy.
 
 ## GRPO
 
