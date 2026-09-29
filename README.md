@@ -128,8 +128,8 @@ Completion length stays at ~215 tokens throughout, so the gain is not verbosity 
 as the samples below show, that the major gain is in having principally better and more accurate logical statements
 in the reasoning section.**
 
-Nb: I observed no backtracking in the zero model's completions, no "Wait..." followed by a re-evaluation of the
-previous steps: self-correction phrases appear in 14 of its 1,319 validation completions against 13 for the baseline,
+Nb: I observed little to no change in backtracking and self-correction in the zero model's completions, no "Wait..."
+followed by a re-evaluation of the previous steps: self-correction phrases appear in 14 of its 1,319 validation completions against 13 for the baseline,
 and in both cases they are triggered by an impossible intermediate result rather than by reflection. Those behaviours
 are the hallmark of large-scale RL runs: the "aha moment" of DeepSeek-R1-Zero, where a 671B base model learns to
 allocate more thinking time and re-evaluate its approach, with completions growing to thousands of tokens over
