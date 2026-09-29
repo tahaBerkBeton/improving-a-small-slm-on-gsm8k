@@ -360,25 +360,18 @@ The total number of pieces placed during that hour is 250 + 500 = 750.
 
 ### Solved only by zero: baseline, SFT and SFT + GRPO wrong, zero right
 
-**Question.** Finley took part in a 100-meter race.  She started off in first, but then fell back 5 spots.  She then moved ahead 2 spots, before falling behind 3.  Lastly, she jumped ahead 1 spot to finish the race.  What place did she finish in?
+**Question.** Jenna starts out with 8 sapphires. She trades 3 sapphires for two rubies. If sapphires are worth $800 and rubies are worth $1200, how much money are all her jewels worth?
 
-**Gold answer.** 6
+**Gold answer.** 6400
 
-**Baseline (Qwen2.5-1.5B-Instruct)** — wrong (parsed 4)
+**Baseline (Qwen2.5-1.5B-Instruct)** — wrong (parsed 8800)
 
 ```
 <reasoning>
-Let's track Finley's position step by step:
-1. She started in first place.
-2. She fell back 5 spots: 1 - 5 = -4
-3. She moved ahead 2 spots: -4 + 2 = -2
-4. She fell behind 3 spots: -2 - 3 = -5
-5. She jumped ahead 1 spot: -5 + 1 = -4
-
-Finley finished in the 4th place.
+Jenna starts with 8 sapphires, which are worth $800 each. So, the value of her sapphires is 8 * $800 = $6400. She trades 3 sapphires for 2 rubies, so she now has 5 sapphires and 2 rubies. The value of her sapphires is still $6400. The value of her rubies is 2 * $1200 = $2400. Therefore, the total value of all her jewels is $6400 + $2400 = $8800.
 </reasoning>
 <answer>
-4
+8800
 </answer>
 ```
 
@@ -386,18 +379,10 @@ Finley finished in the 4th place.
 
 ```
 <reasoning>
-To determine Finley's final place in the race, we need to track her position step by step.
-
-1. Finley started in first place.
-2. She fell back 5 spots, so her new position is first - 5 = 6th place.
-3. She moved ahead 2 spots, so her new position is 6 + 2 = 8th place.
-4. She fell behind 3 spots, so her new position is 8 - 3 = 5th place.
-5. Lastly, she jumped ahead 1 spot, so her final position is 5 + 1 = 6th place.
-
-Therefore, Finley finished in 6th place.
+Jenna starts with 8 sapphires. Each sapphire is worth $800, so the total value of the sapphires is 8 * $800 = $6400. She trades 3 sapphires for 2 rubies, so the value of the sapphires she gives away is 3 * $800 = $2400. The value of the rubies she receives is 2 * $1200 = $2400. Therefore, the total value of the jewels Jenna has now is the value of the sapphires she keeps plus the value of the rubies she receives, which is $6400 - $2400 + $2400 = $6400.
 </reasoning>
 <answer>
-6
+6400
 </answer>
 ```
 
