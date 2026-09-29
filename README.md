@@ -68,8 +68,12 @@ final model is on the Hugging Face Hub (see `models/README.md`).
 ![SFT training curves](plot/sft_training_curves.png)
 
 Validation loss keeps falling to step 125 while validation accuracy peaks at step 25 and plateaus. Loss measures how
-well the student predicts the teacher's tokens; accuracy measures whether its own answers are right. The two disagree,
-so checkpoints are selected on accuracy.
+well the student predicts the teacher's tokens; accuracy measures whether its own answers are right. This is
+interesting, **because it means that throughout training the model kept getting better at predicting tokens the way
+GLM 5.3 does, mapping its own distribution closer and closer to the teacher's, while its validation performance,
+after an initial improvement, saturated and did not improve any further.** It suggests a limit of distillation here:
+the model learned to "think" more like GLM, but not to perform better on the task. The two signals disagree, so
+checkpoints are selected on accuracy.
 
 ## GRPO
 
