@@ -448,7 +448,10 @@ Therefore, the remaining cake weighs 15 ounces.
   learns is a transferable behaviour rather than a GSM8K-specific one, and measure the transfer across the three.
 - **Grade the reasoning, not only the answer.** In GRPO, add a process reward model or an LLM judge that scores the
   quality of the reasoning section and fold it into the reward next to correctness. It might preserve higher-quality
-  reasoning while pushing equally hard on the final answer.
+  reasoning while pushing equally hard on the final answer. **This is important because a sample of test results on
+  GRPO zero shows correctness stemming from illogical reasoning patterns. This is super interesting because it means
+  that RL on the final answer can incentivise reasoning patterns that work in terms of correctness, but that stem
+  from non-generalisable reasoning.**
 - **Scale test-time compute agentically.** Best-of-N rollouts with a verifier, self-criticism calls, and debate
   between rollouts, measured against the single greedy pass used here.
 - **Try LoRA instead of full fine-tuning.** Every run here updates all parameters. I would evaluate whether LoRA,
