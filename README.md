@@ -67,23 +67,23 @@ final model is on the Hugging Face Hub (see `models/README.md`).
 
 ![SFT training curves](plot/sft_training_curves.png)
 
-Validation loss keeps falling to step 125 while validation accuracy peaks at step 25 and plateaus. The two curves
-measure different things:
+This is very interesting because validation loss keeps falling to step 125 while validation accuracy peaks at step
+25 and then plateaus. When I looked at what each curve actually measures, the disagreement made sense:
 
 - **Loss** measures how well the student predicts the teacher's tokens. It kept improving throughout training: the
-  model mapped its own distribution closer and closer to GLM 5.3's.
+  model was mapping its own distribution closer and closer to GLM 5.3's.
 - **Accuracy** measures whether the student's own answers are right. It improved once, then saturated.
 
-**The model learned to "think" more like GLM, but not to perform better on the task.** This is a limit of distillation
-as a technique for eliciting generalised capabilities in a student:
+**My reading is that the model learned to "think" more like GLM, but not to perform better on the task.** I see this
+as a limit of distillation as a technique for eliciting generalised capabilities in a student:
 
 - a model trained from zero, or a frontier model, has had to generalise on its own, potentially from first principles;
 - a distilled student learns to imitate the surface of that generalisation;
-- this is consistent with frontier weights such as Mythos generalising much better than the smaller models distilled
-  from them, such as Opus or Sonnet, even when a spiky or task-specific benchmark shows comparable performance in
-  isolation.
+- this is consistent with what I observe on frontier weights such as Mythos, which generalise much better than the
+  smaller models distilled from them, such as Opus or Sonnet, even when a spiky or task-specific benchmark shows
+  comparable performance in isolation.
 
-Because the two signals disagree, checkpoints are selected on accuracy.
+Because the two signals disagree, I select checkpoints on accuracy.
 
 ## GRPO
 
