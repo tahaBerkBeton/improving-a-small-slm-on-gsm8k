@@ -1,8 +1,30 @@
 # Bootstrapping a small model on GSM8K: teacher-trace SFT, then GRPO
 
-Qwen2.5-1.5B-Instruct is first distilled on reasoning traces from a stronger teacher (GLM 5.3 Flash), then sharpened
-with GRPO against the gold answers. Every model is measured on the same 1,319 held-out questions (GSM8K's official
-test split), with the same prompt, generation engine and scorer.
+**I want to improve the performance of Qwen2.5-1.5B-Instruct on GSM8K.** To get there I set out to explore, in order:
+
+- **Baseline.** Measure how the model does out of the box, with a strict scorer that only accepts an integer inside
+  `<answer>` tags.
+- **Distillation alone.** Test whether supervised fine-tuning on reasoning traces from a stronger teacher
+  (GLM 5.3 Flash) improves performance on its own.
+- **Reinforcement learning (hypothesis).** Maths, like coding, is a domain where the gains from test-time reasoning are
+  largest, and where that reasoning has been obtained with o1/R1-style training
+  ([OpenAI, Learning to Reason with LLMs, 2024](https://openai.com/index/learning-to-reason-with-llms/);
+  [DeepSeek-R1, 2025](https://arxiv.org/abs/2501.12948)). My assumption is that RL against the gold answers, whether
+  PPO as likely used for o1 or the cheaper and proven GRPO introduced by
+  [DeepSeekMath](https://arxiv.org/abs/2402.03300) and used for R1, should improve this model. I planned a
+  "zero" GRPO run, straight from the Instruct model, to test it.
+- **SFT-bootstrapped RL (hypothesis).** On small models the reward tends to saturate early, and at 0.5B zero-RL has
+  been shown to fail to produce learned reasoning
+  ([SimpleRL-Zoo, 2025](https://arxiv.org/abs/2503.18892)); DeepSeek-R1 itself starts from a cold-start SFT stage
+  before RL and reports that distillation beats RL for small models
+  ([DeepSeek-R1, section 4.1](https://arxiv.org/abs/2501.12948)), which has made SFT warm-up before RL the common
+  industry practice. So I also wanted to test whether a teacher-bootstrapped SFT stage helps RL scale better, by
+  running GRPO on top of the SFT model and comparing it against pure zero.
+
+Surprisingly, and as shown below, GRPO from zero ends up better than the SFT warm-up followed by GRPO, in line with
+the finding that SFT memorizes while RL generalizes ([Chu et al., 2025](https://arxiv.org/abs/2501.17161)). Every
+model is measured on the same 1,319 held-out questions (GSM8K's official test split), with the same prompt,
+generation engine and scorer.
 
 ![validation accuracy](plot/val_accuracy_bar_chart.png)
 
