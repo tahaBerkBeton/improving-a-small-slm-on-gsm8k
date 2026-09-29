@@ -434,7 +434,7 @@ Therefore, the remaining cake weighs 15 ounces.
 
 - **Give the model a symbolic verifier and go agentic.** LLMs have been shown to be whimsical with calculations
   natively, with accuracy that shifts when only the numbers in a problem change
-  ([GSM-Symbolic, Mirzadeh et al., Apple, 2024](https://arxiv.org/abs/2410.05229)). A calculator or Python tool
+  ([GSM-Symbolic, Mirzadeh et al., Apple, 2024](https://arxiv.org/abs/2410.05229), great article ^^). A calculator or Python tool
   removes that failure mode. I would first measure how much the Instruct model gains when used agentically with a
   tool, in the spirit of [CodeAct](https://arxiv.org/abs/2402.01030), then run RL on tool-using trajectories and see
   whether the tool call itself becomes a learned, reliable habit.
