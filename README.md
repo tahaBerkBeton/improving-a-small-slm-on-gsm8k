@@ -14,8 +14,7 @@ test split), with the same prompt, generation engine and scorer.
 | Qwen2.5-1.5B-Instruct + SFT + GRPO | **71.87%** |
 | Qwen2.5-1.5B-Instruct + GRPO only, no SFT ("zero") | **76.80%** |
 
-Accuracy is an exact match between the integer inside `<answer>` tags and the gold answer, greedy decoding. The
-standard error on 1,319 questions is about ±1.3 points. The baseline sits below Qwen's published 73.2% because this
+Accuracy is an exact match between the integer inside `<answer>` tags and the gold answer, greedy decoding. The baseline sits below Qwen's published 73.2% because this
 scorer is strict: `$18` or a LaTeX expression inside the tags counts as wrong, and 10.5% of the baseline's answers
 fail that way. That strictness is intentional; the fine-tuned model is trained to produce exactly this format.
 
