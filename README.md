@@ -472,3 +472,6 @@ The total points after the extra points were distributed is \( 22 + 18 + 43 = 83
 
 A limitation of this work is that I should have split a validation set separate from the test set, in order to
 provide more accurate evaluation results. Although we never train on the test labels, we implicitly select for them. This creates a bias for final evaluation, but the model likely improves similarly on an expanded set. For the sake of time and delivery this was neglected, but I am aware of it.
+
+
+as a matter of fact we could use Scale AI's separate GSM1K as test set to run a confirmation evaluations. https://huggingface.co/datasets/ScaleAI/gsm1k
